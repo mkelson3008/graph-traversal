@@ -67,6 +67,23 @@ class Graph {
             })
         })
     }
+
+    getNeighbors(nodeID) {
+        let neighbors = graph.adjacencyList.get(nodeID);
+        return [...neighbors]
+    }
+
+    getNode(nodeID) {
+        return graph.nodes.get(nodeID);
+    }
+
+    getAllNodes() {
+        return [...graph.nodes.values()];
+    }
+
+    getAllEdges() {
+        return [...graph.edges.values()];
+    }
 }
 
 let graph = new Graph();
@@ -80,8 +97,7 @@ graph.addEdge(graph.keys[1], graph.keys[3]);
 console.log(graph.adjacencyList);
 console.log(graph.nodes);
 console.log(graph.edges);
-console.log("After testing updateNodePos");
-graph.removeEdge(0);
-console.log(graph.edges);
-console.log(graph.adjacencyList);
-
+console.log(graph.getNeighbors(0));
+console.log(graph.getNode(0));
+console.log(graph.getAllNodes());
+console.log(graph.getAllEdges());
