@@ -29,7 +29,7 @@ class Graph {
         let toBedeletedEdges = [];
         this.nodes.delete(nodeID);
 
-        this.edges.forEach((value, key, map) => {
+        this.edges.forEach((value, key) => {
             if (value.nodeFrom == nodeID || value.nodeTo == nodeID) {
                 toBedeletedEdges.push(key);
             }
@@ -41,12 +41,31 @@ class Graph {
         this.adjacencyList.delete(nodeID);
     }
 
+    updateNodePos(x, y, nodeID) {
+        let node = this.nodes.get(nodeID);
+        node.x = x;
+        node.y = y;
+    }
+
     addEdge(node1, node2) {
         let newEdge = new Edge(node1, node2, this.edgeTracker);
         this.adjacencyList.get(node1).add(node2);
         this.adjacencyList.get(node2).add(node1);
         this.edges.set(newEdge.edgeID, newEdge)
         this.edgeTracker++;
+    }
+
+    removeEdge(edgeID) {
+        let edge = this.edges.get(edgeID);
+        this.edges.delete(edgeID);
+
+        this.adjacencyList.forEach((neighbors) => {
+            neighbors.forEach((neighborsID) => {
+                if(neighborsID === edge.nodeFrom || neighborsID === edge.nodeTo) {
+                    neighbors.delete(neighborsID);
+                }
+            })
+        })
     }
 }
 
@@ -61,10 +80,8 @@ graph.addEdge(graph.keys[1], graph.keys[3]);
 console.log(graph.adjacencyList);
 console.log(graph.nodes);
 console.log(graph.edges);
-graph.removeNode(0);
-console.log('After removed node');
-console.log(graph.adjacencyList);
-console.log(graph.nodes);
+console.log("After testing updateNodePos");
+graph.removeEdge(0);
 console.log(graph.edges);
-
+console.log(graph.adjacencyList);
 

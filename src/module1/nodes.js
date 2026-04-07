@@ -25,4 +25,12 @@ export class Node {
     get y() {
         return this._y;
     }
+
+    set x(xValue) {
+        this._x = xValue;
+    }
+
+    set y(yValue) {
+        this._y = yValue;
+    }
 }

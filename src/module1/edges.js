@@ -14,8 +14,6 @@ export class Edge {
         return this._edgeID;
     }
 
-
-
     set nodeFrom(fromNode) {
         this._nodeFrom = fromNode;
     }
