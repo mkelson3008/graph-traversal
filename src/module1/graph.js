@@ -1,5 +1,6 @@
 import {Node} from "./nodes.js";
 import {Edge} from "./edges.js";
+import {BFS, DFS} from "../module2/algorithms.js"
 
 class Graph {
     nodeTracker = 0;
@@ -84,6 +85,10 @@ class Graph {
     getAllEdges() {
         return [...graph.edges.values()];
     }
+
+    getAdjacencyList() {
+        return this._adjacencyList;
+    }
 }
 
 let graph = new Graph();
@@ -95,9 +100,7 @@ graph.addEdge(graph.keys[0], graph.keys[1]);
 graph.addEdge(graph.keys[0], graph.keys[2]);
 graph.addEdge(graph.keys[1], graph.keys[3]);
 console.log(graph.adjacencyList);
-console.log(graph.nodes);
-console.log(graph.edges);
-console.log(graph.getNeighbors(0));
-console.log(graph.getNode(0));
-console.log(graph.getAllNodes());
-console.log(graph.getAllEdges());
+console.log("After testing BFS");
+console.log(BFS(0, graph.adjacencyList))
+console.log("After testing DFS");
+console.log(0, graph.adjacencyList)
