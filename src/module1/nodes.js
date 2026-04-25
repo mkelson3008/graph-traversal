@@ -17,20 +17,4 @@ export class Node {
     get nodeID() {
         return this._nodeID;
     }
-
-    get x() {
-        return this._x;
-    }
-
-    get y() {
-        return this._y;
-    }
-
-    set x(xValue) {
-        this._x = xValue;
-    }
-
-    set y(yValue) {
-        this._y = yValue;
-    }
 }

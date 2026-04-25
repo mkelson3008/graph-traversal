@@ -1,8 +1,8 @@
 import {Node} from "./nodes.js";
 import {Edge} from "./edges.js";
-import {BFS, DFS} from "../module2/algorithms.js"
+import {BFS, DFS} from "../module3/algorithms.js"
 
-class Graph {
+export class Graph {
     nodeTracker = 0;
     edgeTracker = 0;
     nodes;
@@ -15,31 +15,38 @@ class Graph {
         this.nodes = new Map();
         this.edges = new Map();
         this.keys = [];
+        this.startNodeId = null;
     }
 
-    addNode(x, y, type) {
+    addNode(x, y, type = "normal") {
         let nodeObj = new Node(x, y, type);
         nodeObj.nodeID = this.nodeTracker;
         this.adjacencyList.set(nodeObj.nodeID, new Set());
         this.nodes.set(nodeObj.nodeID, nodeObj)
         this.nodeTracker++;
         this.keys = [...this.adjacencyList.keys()];
+        return nodeObj;
     }
 
     removeNode(nodeID) {
-        let toBedeletedEdges = [];
+        let toBeDeletedEdges = [];
         this.nodes.delete(nodeID);
+
+        if (this.startNodeId === nodeID) {
+            this.startNodeId = null;
+        }
 
         this.edges.forEach((value, key) => {
             if (value.nodeFrom == nodeID || value.nodeTo == nodeID) {
-                toBedeletedEdges.push(key);
+                toBeDeletedEdges.push(key);
             }
         })
-        for (const deleteEdge of toBedeletedEdges) {
+        for (const deleteEdge of toBeDeletedEdges) {
             this.edges.delete(deleteEdge);
         }
 
         this.adjacencyList.delete(nodeID);
+        return toBeDeletedEdges
     }
 
     updateNodePos(x, y, nodeID) {
@@ -54,53 +61,52 @@ class Graph {
         this.adjacencyList.get(node2).add(node1);
         this.edges.set(newEdge.edgeID, newEdge)
         this.edgeTracker++;
+        return newEdge;
     }
 
     removeEdge(edgeID) {
         let edge = this.edges.get(edgeID);
+        if (!edge) return;
         this.edges.delete(edgeID);
 
-        this.adjacencyList.forEach((neighbors) => {
-            neighbors.forEach((neighborsID) => {
-                if(neighborsID === edge.nodeFrom || neighborsID === edge.nodeTo) {
-                    neighbors.delete(neighborsID);
-                }
-            })
-        })
+        this.adjacencyList.get(edge.nodeFrom).delete(edge.nodeTo);
+        this.adjacencyList.get(edge.nodeTo).delete(edge.nodeFrom);
     }
 
     getNeighbors(nodeID) {
-        let neighbors = graph.adjacencyList.get(nodeID);
+        let neighbors = this.adjacencyList.get(nodeID);
         return [...neighbors]
     }
 
+    setStartNode(nodeID) {
+        if (this.startNodeId === nodeID) return null;
+        const previousStartId = this.startNodeId;
+
+        if (previousStartId !== null) {
+            this.nodes.get(previousStartId).type = "normal";
+        }
+
+        this.nodes.get(nodeID).type = "start";
+        this.startNodeId = nodeID;
+
+        return previousStartId;
+    }
+
     getNode(nodeID) {
-        return graph.nodes.get(nodeID);
+        return this.nodes.get(nodeID);
     }
 
     getAllNodes() {
-        return [...graph.nodes.values()];
+        return [...this.nodes.values()];
     }
 
     getAllEdges() {
-        return [...graph.edges.values()];
+        return [...this.edges.values()];
     }
 
     getAdjacencyList() {
-        return this._adjacencyList;
+        return this.adjacencyList;
     }
 }
 
-let graph = new Graph();
-graph.addNode(1, 1, "start");
-graph.addNode(2, 2, "sure");
-graph.addNode(3, 3, "start");
-graph.addNode(4, 4, "sure");
-graph.addEdge(graph.keys[0], graph.keys[1]);
-graph.addEdge(graph.keys[0], graph.keys[2]);
-graph.addEdge(graph.keys[1], graph.keys[3]);
-console.log(graph.adjacencyList);
-console.log("After testing BFS");
-console.log(BFS(0, graph.adjacencyList))
-console.log("After testing DFS");
-console.log(0, graph.adjacencyList)
+export const graphModel = new Graph();

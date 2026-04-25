@@ -27,7 +27,7 @@ export class Edge {
     }
 
     get nodeTo() {
-        return this._nodeFrom;
+        return this._nodeTo;
     }
 }
 

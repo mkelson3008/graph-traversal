@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="./graphSVG.js"></script>
+    <link rel="stylesheet" href="graph.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <aside id="toolbar">
+            <h2>Tools</h2>
+            <button class="mode-button" data-mode="addNode">Add node</button>
+            <button class="mode-button" data-mode="addEdge">Add edge</button>
+            <button class="mode-button" data-mode="delete">Delete</button>
+            <button class="mode-button" data-mode="setStart">Set start</button>
+
+            <div id="mode-indicator">Mode: None</div>
+        </aside>
+
+        <svg id="graph-canvas" width="800" height="600">
+            <g id="edge-layer"></g>
+            <g id="node-layer"></g>
+            <g id="label-layer"></g>
+        </svg>
+    </div>
+</body>
+</html>

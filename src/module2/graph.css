@@ -1,0 +1,62 @@
+#node-layer circle {
+    fill: #4A90D9;
+    stroke: #2C3E50;
+    stroke-width: 2;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+
+#node-layer circle:hover {
+    fill: #5BA0E9;
+}
+
+circle.visited {
+    fill: #E74C3C;
+}
+
+circle.current {
+    fill: #F39C12;
+    stroke-width: 3;
+}
+
+circle.queued {
+    fill: #9B59B6;
+}
+
+#edge-layer line {
+  stroke: #999;
+  stroke-width: 2;
+}
+
+line.traversed {
+  stroke: #E74C3C;
+  stroke-width: 3;
+}
+
+/* Labels ignore clicks */
+#label-layer text {
+  pointer-events: none;
+  fill: white;
+  font-family: sans-serif;
+  font-size: 14px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  user-select: none;
+}
+
+/* For edges!!! */
+#edge-layer line {
+    stroke: #999;
+    stroke-width: 8;
+    cursor: pointer;
+}
+
+line.traversed {
+    stroke: #E74C3C;
+    stroke-width: 10;
+}
+
+#node-layer circle.start-node {
+    stroke: #cf4ad9;
+    stroke-width: 4;
+}
