@@ -1,5 +1,4 @@
 export class Edge {
-    // node from, node to, id
     nodeFrom;
     nodeTo;
     edgeID;

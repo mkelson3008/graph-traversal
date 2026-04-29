@@ -1,6 +1,5 @@
 import {Node} from "./nodes.js";
 import {Edge} from "./edges.js";
-import {BFS, DFS} from "../module3/algorithms.js"
 
 export class Graph {
     nodeTracker = 0;

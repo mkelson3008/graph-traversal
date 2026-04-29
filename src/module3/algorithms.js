@@ -1,43 +1,90 @@
-function BFS(s, adj) {
-    let level = new Map();
-    level.set(s, 0);
-    let i = 1;
-    let frontier = [s];
+function BFS(startId, adj, getEdgeId) {
+    const steps = [];
+    const visited = new Set();
+    const queued = new Set();
+    const parentEdge = new Map();
 
-    while (frontier.length) {
-        let next = [];
-        for (const u of frontier) {
-            for (const v of adj.get(u)) {
-                if (level.has(v) == false) {
-                    level.set(v, i);
-                    next.push(v);
-                }
+    const queue = [startId];
+    queued.add(startId);
+
+    steps.push({
+        currentNode: startId,
+        visitedNodes: [],
+        queuedNodes: [],
+        traversedEdge: null
+    });
+
+    while (queue.length) {
+        const u = queue.shift()
+        queued.delete(u);
+        visited.add(u);
+
+        for (const v of adj.get(u)) {
+            if (!visited.has(v) && !queued.has(v)) {
+                queued.add(v);
+                queue.push(v);
+                parentEdge.set(v, getEdgeId(u, v));
             }
         }
-        frontier = next;
-        i+= 1;
+
+        if (queue.length > 0) {
+            const next = queue[0];
+            steps.push({
+                currentNode: next,
+                visitedNodes: [...visited],
+                queuedNodes: [...queued].filter(id => id !== next),
+                traversedEdge: parentEdge.get(next) ?? null
+            });
+        }
     }
-    return level;
+
+    return steps;
 }
 
-function DFS(s, adj) {
-    let visited = new Set();
-    let stack = [s];
+
+function DFS(startId, adj, getEdgeId) {
+    const steps = [];
+    const visited = new Set();
+    const onStack = new Set();
+    const parentEdge = new Map();
+
+    const stack = [startId];
+    onStack.add(startId);
+
+    steps.push({
+        currentNode: startId,
+        visitedNodes: [],
+        queuedNodes: [],
+        traversedEdge: null
+    });
 
     while (stack.length) {
-        u = stack.pop();
-        
-        if (visited.has(u) == false) {
-            visited.add(u);
-            for (const v of adj.get(u)){
-                if (visited.has(v) == false) {
-                    stack.push(v);
-                }
+        const u = stack.pop();
+        onStack.delete(u);
+
+        if (visited.has(u)) continue;
+        visited.add(u);
+
+        for (const v of adj.get(u)) {
+            if (!visited.has(v) && !onStack.has(v)) {
+                stack.push(v);
+                onStack.add(v);
+                parentEdge.set(v, getEdgeId(u, v));
             }
+        }
+
+        if (stack.length > 0) {
+            const next = stack[stack.length - 1];
+            steps.push({
+                currentNode: next,
+                visitedNodes:  [...visited],
+                queuedNodes: [...onStack].filter(id => id !== next),
+                traversedEdge: parentEdge.get(next) ?? null
+            });
         }
     }
 
-    return visited;
+    return steps;
 }
 
-export {BFS, DFS};
+export {BFS, DFS}

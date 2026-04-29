@@ -1,62 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background-color: #F5F5F7;
+    color: #2C3E50;
+}
+
+h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6C7A89;
+    margin: 16px 0 8px 0;
+}
+
+
+#app {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+#toolbar {
+    width: 200px;
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#toolbar h2:first-child {
+    margin-top: 0;
+}
+
+
+button {
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+    color: #2C3E50;
+    border: 1px solid #D0D7DE;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+    background-color: #F5F5F7;
+    border-color: #2C3E50;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+.mode-button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.mode-button.active {
+    background-color: #4A90D9;
+    color: white;
+    border-color: #4A90D9;
+}
+
+.mode-button.active:hover {
+    background-color: #3A7FC8;
+    border-color: #3A7FC8;
+}
+
+#mode-indicator {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #6C7A89;
+}
+
+
+#algorithm-select {
+    width: 100%;
+    padding: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    border: 1px solid #D0D7DE;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 8px;
+}
+
+#run-button {
+    width: 100%;
+    background-color: #27AE60;
+    color: white;
+    border-color: #27AE60;
+    font-weight: 500;
+}
+
+#run-button:hover:not(:disabled) {
+    background-color: #229954;
+    border-color: #229954;
+}
+
+
+#playback-controls {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+#playback-controls button {
+    flex: 1;
+    padding: 6px 4px;
+    font-size: 12px;
+}
+
+#step-indicator {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6C7A89;
+    text-align: center;
+}
+
+
+#graph-canvas {
+    border: 2px solid #2C3E50;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
 #node-layer circle {
     fill: #4A90D9;
     stroke: #2C3E50;
     stroke-width: 2;
     cursor: pointer;
-    transition: fill 0.3s ease;
+    transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
 #node-layer circle:hover {
     fill: #5BA0E9;
 }
 
-circle.visited {
+#node-layer circle.start-node {
+    stroke: #cf4ad9;
+    stroke-width: 4;
+}
+
+
+#node-layer circle.visited {
     fill: #E74C3C;
 }
 
-circle.current {
+#node-layer circle.current {
     fill: #F39C12;
     stroke-width: 3;
 }
 
-circle.queued {
+#node-layer circle.queued {
     fill: #9B59B6;
 }
 
-#edge-layer line {
-  stroke: #999;
-  stroke-width: 2;
-}
 
-line.traversed {
-  stroke: #E74C3C;
-  stroke-width: 3;
-}
-
-/* Labels ignore clicks */
-#label-layer text {
-  pointer-events: none;
-  fill: white;
-  font-family: sans-serif;
-  font-size: 14px;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  user-select: none;
-}
-
-/* For edges!!! */
 #edge-layer line {
     stroke: #999;
     stroke-width: 8;
     cursor: pointer;
+    transition: stroke 0.3s ease;
 }
 
-line.traversed {
+#edge-layer line.traversed {
     stroke: #E74C3C;
     stroke-width: 10;
 }
 
-#node-layer circle.start-node {
-    stroke: #cf4ad9;
-    stroke-width: 4;
+#label-layer text {
+    pointer-events: none;
+    fill: white;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    user-select: none;
+}
+
+#queue-display {
+    font-family: monospace;
+    font-size: 14px;
+    background-color: #F5F5F7;
+    border: 1px solid #D0D7DE;
+    border-radius: 4px;
+    padding: 8px;
+    min-height: 36px;
+    word-break: break-all;
 }

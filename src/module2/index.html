@@ -17,6 +17,25 @@
             <button class="mode-button" data-mode="setStart">Set start</button>
 
             <div id="mode-indicator">Mode: None</div>
+
+            <h2>Algorithm</h2>
+            <select id="algorithm-select">
+                <option value="BFS">BFS</option>
+                <option value="DFS">DFS</option>
+            </select>
+            <button id="run-button">Run</button>
+
+            <h2>Playback</h2>
+            <div id="playback-controls">
+                <button id="skip-start">⏮</button>
+                <button id="step-back">◀</button>
+                <button id="play-pause">▶</button>
+                <button id="step-forward">▶</button>
+                <button id="skip-end">⏭</button>
+            </div>
+            <div id="step-indicator">Step 0 / 0</div>
+            <h2 id="queue-label">Queue</h2>
+            <div id="queue-display">—</div>
         </aside>
 
         <svg id="graph-canvas" width="800" height="600">
